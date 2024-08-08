@@ -1,0 +1,125 @@
+name: Test WebAPI Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifactName:
+        description: 'Name of the artifact'
+        required: true
+        type: string
+      deployToInt:
+        description: 'Deploy to Int'
+        required: true
+        type: boolean
+        default: true
+      deployToTest:
+        description: 'Deploy to Test'
+        required: true
+        type: boolean
+        default: true
+      deployToTest01:
+        description: 'Deploy to Test01'
+        required: true
+        type: boolean
+        default: true
+      deployToTest02:
+        description: 'Deploy to Test02'
+        required: true
+        type: boolean
+        default: true
+      deployToAutomation:
+        description: 'Deploy to Automation'
+        required: true
+        type: boolean
+        default: true
+
+  workflow_call:
+    inputs:
+      artifactName:
+        description: 'Name of the artifact'
+        required: true
+        type: string
+      deployToInt:
+        description: 'Deploy to Int'
+        required: true
+        type: boolean
+        default: true
+      deployToTest:
+        description: 'Deploy to Test'
+        required: true
+        type: boolean
+        default: true
+      deployToTest01:
+        description: 'Deploy to Test01'
+        required: true
+        type: boolean
+        default: true
+      deployToTest02:
+        description: 'Deploy to Test02'
+        required: true
+        type: boolean
+        default: true
+      deployToAutomation:
+        description: 'Deploy to Automation'
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  setup-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Get Variables
+        id: variables
+        uses: ./.github/actions/get-variables
+        with:
+          artifactName: 'Maestro.WebApi'
+          awsRegion: 'eu-west-1'
+          imageName: 'maestro-webapi'
+          repositoryName: 'maestro-common-prod-webapi-repository'
+    outputs:
+      artifactName: ${{ steps.variables.outputs.ARTIFACT_NAME }}
+      awsRegion: ${{ steps.variables.outputs.AWS_REGION }}
+      imageName: ${{ steps.variables.outputs.IMAGE_NAME }}
+      repositoryName: ${{ steps.variables.outputs.REPOSITORY_NAME }}
+
+  build:
+    needs: setup-variables
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Build WebApi
+        uses: ./.github/actions/build-webapi
+        with:
+          dotnet-version: '8.0.x'
+          project-path: './src/MyWebApi'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: 
+          - ${{ inputs.deployToInt && 'int' || '' }}
+          - ${{ inputs.deployToTest && 'test' || '' }}
+          - ${{ inputs.deployToTest01 && 'test01' || '' }}
+          - ${{ inputs.deployToTest02 && 'test02' || '' }}
+          - ${{ inputs.deployToAutomation && 'automation' || '' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Deploy WebApi
+        uses: ./.github/actions/deploy-webapi
+        with:
+          environment: ${{ matrix.environment }}
+          artifactName: ${{ needs.setup-variables.outputs.artifactName }}
+          awsRegion: ${{ needs.setup-variables.outputs.awsRegion }}
+          imageName: ${{ needs.setup-variables.outputs.imageName }}
+          imageTag: 'latest' # veya başka bir tag
+          repositoryName: ${{ needs.setup-variables.outputs.repositoryName }}
