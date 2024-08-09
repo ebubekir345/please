@@ -23,6 +23,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: WebApiArtifact
+
     - name: Print deployment message
       run: |
         echo "Deploying to environment: ${{ inputs.environment }}"
@@ -33,10 +38,9 @@ runs:
         echo "Repository: ${{ inputs.repositoryName }}"
       shell: bash
 
-   
     - name: Deploy Application
       run: |
-        # Örnek: AWS CLI kullanarak bir Docker görüntüsünü dağıtın
+        # Example: Use AWS CLI to deploy a Docker image
         echo "Deploying ${{ inputs.artifactName }} to ${{ inputs.environment }} in ${{ inputs.awsRegion }}"
         # aws ecr describe-images --repository-name ${{ inputs.repositoryName }} --image-ids imageTag=${{ inputs.imageTag }}
       shell: bash
