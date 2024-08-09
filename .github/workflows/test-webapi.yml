@@ -33,38 +33,6 @@ on:
         type: boolean
         default: true
 
-  workflow_call:
-    inputs:
-      artifactName:
-        description: 'Name of the artifact'
-        required: true
-        type: string
-      deployToInt:
-        description: 'Deploy to Int'
-        required: true
-        type: boolean
-        default: true
-      deployToTest:
-        description: 'Deploy to Test'
-        required: true
-        type: boolean
-        default: true
-      deployToTest01:
-        description: 'Deploy to Test01'
-        required: true
-        type: boolean
-        default: true
-      deployToTest02:
-        description: 'Deploy to Test02'
-        required: true
-        type: boolean
-        default: true
-      deployToAutomation:
-        description: 'Deploy to Automation'
-        required: true
-        type: boolean
-        default: true
-
 jobs:
   build-and-setup:
     runs-on: ubuntu-latest
@@ -95,7 +63,7 @@ jobs:
 
   deploy-int:
     needs: build-and-setup
-    if: ${{ inputs.deployToInt }} # Sadece deployToInt true ise çalışır
+    if: ${{ inputs.deployToInt }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -108,12 +76,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # veya başka bir tag
+          imageTag: 'latest' 
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest }} # Sadece deployToTest true ise çalışır
+    if: ${{ inputs.deployToTest }} 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -126,12 +94,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # veya başka bir tag
+          imageTag: 'latest' 
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test01:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest01 }} # Sadece deployToTest01 true ise çalışır
+    if: ${{ inputs.deployToTest01 }} 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -144,12 +112,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # veya başka bir tag
+          imageTag: 'latest' 
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test02:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest02 }} # Sadece deployToTest02 true ise çalışır
+    if: ${{ inputs.deployToTest02 }} 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -162,12 +130,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # veya başka bir tag
+          imageTag: 'latest' 
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-automation:
     needs: build-and-setup
-    if: ${{ inputs.deployToAutomation }} # Sadece deployToAutomation true ise çalışır
+    if: ${{ inputs.deployToAutomation }} 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -180,5 +148,5 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # veya başka bir tag
+          imageTag: 'latest' 
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
