@@ -95,7 +95,7 @@ jobs:
 
   deploy-int:
     needs: build-and-setup
-    if: inputs.deployToInt == 'true' # if deployToInt is true, this will run
+    if: ${{ inputs.deployToInt }} # Sadece deployToInt true ise çalışır
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -108,12 +108,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # or another tag
+          imageTag: 'latest' # veya başka bir tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test:
     needs: build-and-setup
-    if: inputs.deployToTest == 'true' # if deployToTest is true, this will run
+    if: ${{ inputs.deployToTest }} # Sadece deployToTest true ise çalışır
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -126,12 +126,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # or another tag
+          imageTag: 'latest' # veya başka bir tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test01:
     needs: build-and-setup
-    if: inputs.deployToTest01 == 'true' # if deployToTest01 is true, this will run
+    if: ${{ inputs.deployToTest01 }} # Sadece deployToTest01 true ise çalışır
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -144,12 +144,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # or another tag
+          imageTag: 'latest' # veya başka bir tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test02:
     needs: build-and-setup
-    if: inputs.deployToTest02 == 'true' # if deployToTest02 is true, this will run
+    if: ${{ inputs.deployToTest02 }} # Sadece deployToTest02 true ise çalışır
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -162,12 +162,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # or another tag
+          imageTag: 'latest' # veya başka bir tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-automation:
     needs: build-and-setup
-    if: inputs.deployToAutomation == 'true' # if deployToAutomation is true, this will run 
+    if: ${{ inputs.deployToAutomation }} # Sadece deployToAutomation true ise çalışır
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -180,6 +180,5 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' # or another tag
+          imageTag: 'latest' # veya başka bir tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
-
