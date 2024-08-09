@@ -63,7 +63,7 @@ jobs:
 
   deploy-int:
     needs: build-and-setup
-    if: ${{ inputs.deployToInt }}
+    if: ${{ inputs.deployToInt }} # Only runs if deployToInt is true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -76,12 +76,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' 
+          imageTag: 'latest' # or another tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest }} 
+    if: ${{ inputs.deployToTest }} # Only runs if deployToTest is true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -94,12 +94,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' 
+          imageTag: 'latest' # or another tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test01:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest01 }} 
+    if: ${{ inputs.deployToTest01 }} # Only runs if deployToTest01 is true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -112,12 +112,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' 
+          imageTag: 'latest' # or another tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-test02:
     needs: build-and-setup
-    if: ${{ inputs.deployToTest02 }} 
+    if: ${{ inputs.deployToTest02 }} # Only runs if deployToTest02 is true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -130,12 +130,12 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' 
+          imageTag: 'latest' # or another tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
 
   deploy-automation:
     needs: build-and-setup
-    if: ${{ inputs.deployToAutomation }} 
+    if: ${{ inputs.deployToAutomation }} # Only runs if deployToAutomation is true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -148,5 +148,6 @@ jobs:
           artifactName: ${{ needs.build-and-setup.outputs.artifactName }}
           awsRegion: ${{ needs.build-and-setup.outputs.awsRegion }}
           imageName: ${{ needs.build-and-setup.outputs.imageName }}
-          imageTag: 'latest' 
+          imageTag: 'latest' # or another tag
           repositoryName: ${{ needs.build-and-setup.outputs.repositoryName }}
+
