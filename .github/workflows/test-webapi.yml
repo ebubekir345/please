@@ -43,11 +43,7 @@ jobs:
       - name: Get Variables
         id: variables
         uses: ./.github/actions/get-variables
-        with:
-          artifactName: 'Maestro.WebApi'
-          awsRegion: 'eu-west-1'
-          imageName: 'maestro-webapi'
-          repositoryName: 'maestro-common-prod-webapi-repository'
+
           
       - name: Build WebApi
         uses: ./.github/actions/build-webapi
