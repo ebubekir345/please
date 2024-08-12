@@ -65,6 +65,7 @@ jobs:
     needs: build-and-setup
     if: ${{ inputs.deployToInt }} # Only runs if deployToInt is true
     runs-on: ubuntu-latest
+    environment: int-environment
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
