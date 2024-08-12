@@ -47,9 +47,6 @@ jobs:
           
       - name: Build WebApi
         uses: ./.github/actions/build-webapi
-        with:
-          dotnet-version: '8.0.x'
-          project-path: './src/MyWebApi'
           
     outputs:
       artifactName: ${{ steps.variables.outputs.ARTIFACT_NAME }}
